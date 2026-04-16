@@ -1,0 +1,78 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "A fashion item for sale",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Name of the product" },
+        "description": { "type": "string", "description": "Detailed description" },
+        "price": { "type": "number", "description": "Price in local currency" },
+        "images": { "type": "array", "description": "List of image URLs" },
+        "category": { "type": "string", "description": "Category ID" },
+        "sizes": { "type": "array", "description": "Available sizes (e.g., S, M, L, XL)" },
+        "stock": { "type": "number", "description": "Available quantity" },
+        "isNewArrival": { "type": "boolean", "description": "Whether it's a new arrival" },
+        "isBestseller": { "type": "boolean", "description": "Whether it's a bestseller" }
+      },
+      "required": ["name", "price", "category", "images"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Product category",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Category name" },
+        "slug": { "type": "string", "description": "URL-friendly name" }
+      },
+      "required": ["name", "slug"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "A customer order",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "ID of the customer" },
+        "items": { "type": "array", "description": "List of ordered items" },
+        "totalAmount": { "type": "number", "description": "Total price of the order" },
+        "status": { "type": "string", "enum": ["pending", "processing", "shipped", "delivered", "cancelled"] },
+        "shippingAddress": { "type": "object", "description": "Delivery address" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "items", "totalAmount", "status", "createdAt"]
+    },
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "address": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "customer"] }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "BlogPost": {
+      "title": "BlogPost",
+      "description": "Fashion tips and brand updates",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "author": { "type": "string" },
+        "image": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "content", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/products/{productId}": { "schema": "Product", "description": "Collection of products" },
+    "/categories/{categoryId}": { "schema": "Category", "description": "Product categories" },
+    "/orders/{orderId}": { "schema": "Order", "description": "Customer orders" },
+    "/users/{userId}": { "schema": "User", "description": "User profiles" },
+    "/blog/{postId}": { "schema": "BlogPost", "description": "Blog posts" }
+  }
+}
